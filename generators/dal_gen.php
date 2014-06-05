@@ -7,10 +7,12 @@
  */
 
 /**
- * Description of dao_generator
+ * Description of dal_generator
  *
  * @author x666207
  */
-class dao_generator {
+namespace generators;
+
+class dal_gen {
   //put your code here
 }

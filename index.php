@@ -1,6 +1,11 @@
 <?php
 
 include_once 'config.php';
+include_once 'generators/dal_gen.php';
+include_once 'generators/dao_gen.php';
+
+$dao_gen = new \generators\dao_gen();
+$dal_gen = new \generators\dal_gen();
 
 $stmt = $DBH->query('SHOW TABLES;');
 
