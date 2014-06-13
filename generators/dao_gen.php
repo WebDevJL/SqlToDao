@@ -89,7 +89,7 @@ class dao_gen {
     fwrite($this->writer, $this->_TAB2 . "// GETTERS //" . $this->_LF);
     foreach ($columns as $column_num => $column_name) {
       $output = $this->_TAB2 . "public function " . $column_name . "() {" . $this->_LF;
-      $output .= $this->_TAB4 . '$this->' . $column_name . ' = ' . $column_name .';' . $this->_LF;
+      $output .= $this->_TAB4 . 'return $this->' . $column_name .';' . $this->_LF;
       $output .= $this->_TAB2 . "}" . $this->_CRLF;
       fwrite($this->writer, $output);
     }

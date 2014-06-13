@@ -33,7 +33,7 @@ function get_table_column_names($table, $dbh) {
 
 function BuildClassHeader($dao, $table_name) {
   $dao->OpenWriter(array("file_name" => "output/" . ucfirst($table_name)));
-  $dao->AddNameSpace("Libray\BO");
+  $dao->AddNameSpace("Library\BO");
   $dao->AddScriptNotAllowedLine();
   $dao->ClassStart(array("class_name" => $table_name, "base_class" => "\Library\Entity"));
 }
