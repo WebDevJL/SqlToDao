@@ -11,6 +11,8 @@
  *
  * @author x666207
  */
-class dal_generator {
+namespace generators;
+
+class dal_gen {
   //put your code here
 }

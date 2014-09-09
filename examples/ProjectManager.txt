@@ -1,0 +1,27 @@
+"<?php"
+
+"namespace Library\BO;"
+"if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');"
+
+"class {table_name} extends \Library\Entity {"
+
+{for each column}
+    public ${column name};
+    const {colum_name}_ERR = {column_num};
+
+  // SETTERS //
+
+  public function set{colum_name}(${colum_name}) {
+    if (!is_string(${colum_name}) || empty(${colum_name})) {
+      $this->erreurs[] = self::USERNAME_ERR;
+    } else {
+      $this->username = $username;
+    }
+  }
+ 
+  // GETTERS //
+
+  public function {colum_name}() {
+    return $this->{colum_name};
+  }
+}
