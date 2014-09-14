@@ -9,13 +9,15 @@
  */
 
 /*Configuration section*/
-$db_config_used = "local_mysql";
+$db_config_used = "fwm";
 
-$db_config["local_mysql"]["host"] = "localhost";
-$db_config["local_mysql"]["user"] = "test_fwa";
-$db_config["local_mysql"]["pwd"] = "fwa1_6231One@";
-$db_config["local_mysql"]["default_db_name"] = "fwa_2";
+//Field work manager project
+$db_config["fwm"]["host"] = "localhost";
+$db_config["fwm"]["user"] = "baiken_fwm_1";
+$db_config["fwm"]["pwd"] = "fwm1_62313One@";
+$db_config["fwm"]["default_db_name"] = "baiken_fwm_1";
 
+//Another project example
 $db_config["tmpl"]["host"] = "";
 $db_config["tmpl"]["user"] = "";
 $db_config["tmpl"]["pwd"] = "";

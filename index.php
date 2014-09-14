@@ -15,7 +15,7 @@ if ($stmt->rowCount() > 0) {
     $table_name = $table[0];
     $table_col_names = get_table_column_names($table[0], $DBH);
 
-    $file_name =  "output/" . ucfirst($table_name) . ".php";
+    $file_name =  "output/" . ucfirst($table_name) . ".php<br />";
     echo $file_name;
     $dao = new generators\dao_gen(array("file_name" => $file_name));
     BuildClassHeader($dao, $table_name);
@@ -33,7 +33,7 @@ function get_table_column_names($table, $dbh) {
 
 function BuildClassHeader($dao, $table_name) {
   $dao->OpenWriter(array("file_name" => "output/" . ucfirst($table_name)));
-  $dao->AddNameSpace("Library\BO");
+  $dao->AddNameSpace("Applications\PMTool\Models\Dao");
   $dao->AddScriptNotAllowedLine();
   $dao->ClassStart(array("class_name" => $table_name, "base_class" => "\Library\Entity"));
 }

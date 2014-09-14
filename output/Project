@@ -1,5 +1,5 @@
 <?php
-namespace Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 class Project extends \Library\Entity{  public     $project_id,    $project_name,    $project_number,    $project_desc,    $active,    $visible,    $pm_id;
   const     PROJECT_ID_ERR = 0,    PROJECT_NAME_ERR = 1,    PROJECT_NUMBER_ERR = 2,    PROJECT_DESC_ERR = 3,    ACTIVE_ERR = 4,    VISIBLE_ERR = 5,    PM_ID_ERR = 6;
   // SETTERS //  public function setProject_id($project_id) {    if (empty($project_id)) {      $this->erreurs[] = self::PROJECT_ID_ERR;    } else {      $this->project_id = $project_id;    }  }
