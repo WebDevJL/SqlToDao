@@ -32,9 +32,34 @@ class dao_gen {
     fclose($this->writer);
   }
 
-  public function AddNameSpace($namespace) {
+  public function AddPhpOpenTag() {
     fwrite($this->writer, "<?php" . $this->_CRLF);
+  }
+
+  public function AddNameSpace($namespace) {
     fwrite($this->writer, "namespace " . $namespace . ";");
+  }
+
+  public function AddFileDescription($table_name) {
+    fwrite($this->writer, "/**" . $this->_LF . "*" . $this->_LF);
+    fwrite($this->writer, "* @package    Basic MVC framework" . $this->_LF);
+    fwrite($this->writer, "* @author     Jeremie Litzler" . $this->_LF);
+    fwrite($this->writer, "* @copyright  Copyright (c) 2014" . $this->_LF);
+    fwrite($this->writer, "* @license" . $this->_LF);
+    fwrite($this->writer, "* @link" . $this->_LF);
+    fwrite($this->writer, "* @since" . $this->_LF);
+    fwrite($this->writer, "* @filesource" . $this->_LF);
+    fwrite($this->writer, "*/" . $this->_LF);
+    fwrite($this->writer, "// ------------------------------------------------------------------------" . $this->_CRLF);
+    fwrite($this->writer, "/**" . $this->_LF . "*" . $this->_LF);
+    fwrite($this->writer, "* " . ucfirst($table_name) ." Dao Class" . $this->_LF);
+    fwrite($this->writer, "*" . $this->_LF);
+    fwrite($this->writer, "* @package     Application/PMTool" . $this->_LF);
+    fwrite($this->writer, "* @subpackage  Models/Dao" . $this->_LF);
+    fwrite($this->writer, "* @category    " . ucfirst($table_name) . $this->_LF);
+    fwrite($this->writer, "* @author      FWM DEV Team" . $this->_LF);
+    fwrite($this->writer, "* @link" . $this->_LF);
+    fwrite($this->writer, "*/" . $this->_CRLF);
   }
 
   public function AddScriptNotAllowedLine() {
@@ -75,11 +100,11 @@ class dao_gen {
     fwrite($this->writer, $this->_TAB2 . "// SETTERS //" . $this->_LF);
     foreach ($columns as $column_num => $column_name) {
       $output = $this->_TAB2 . "public function set" . ucfirst($column_name) . "($" . $column_name . ") {" . $this->_LF;
-      $output .= $this->_TAB4 . "if (empty($" . $column_name . ")) {" . $this->_LF;
-      $output .= $this->_TAB6 . '$this->erreurs[] = self::' . strtoupper($column_name) . '_ERR;' . $this->_LF;
-      $output .= $this->_TAB4 . "} else {" . $this->_LF;
+      //$output .= $this->_TAB4 . "if (empty($" . $column_name . ")) {" . $this->_LF;
+      //$output .= $this->_TAB6 . '$this->erreurs[] = self::' . strtoupper($column_name) . '_ERR;' . $this->_LF;
+      //$output .= $this->_TAB4 . "} else {" . $this->_LF;
       $output .= $this->_TAB6 . '$this->' . $column_name . ' = $' . $column_name . ';' . $this->_LF;
-      $output .= $this->_TAB4 . "}" . $this->_LF;
+      //$output .= $this->_TAB4 . "}" . $this->_LF;
       $output .= $this->_TAB2 . "}" . $this->_CRLF;
       fwrite($this->writer, $output);
     }
@@ -89,7 +114,7 @@ class dao_gen {
     fwrite($this->writer, $this->_TAB2 . "// GETTERS //" . $this->_LF);
     foreach ($columns as $column_num => $column_name) {
       $output = $this->_TAB2 . "public function " . $column_name . "() {" . $this->_LF;
-      $output .= $this->_TAB4 . 'return $this->' . $column_name .';' . $this->_LF;
+      $output .= $this->_TAB4 . 'return $this->' . $column_name . ';' . $this->_LF;
       $output .= $this->_TAB2 . "}" . $this->_CRLF;
       fwrite($this->writer, $output);
     }
