@@ -19,7 +19,7 @@ class dao_gen {
   protected $file_name, $writer;
   public $file_contents;
   private $_CRLF = "\n\r", $_LF = "\r", $_TAB2 = "  ", $_TAB4 = "    ", $_TAB6 = "      ", $_TAB8 = "        ";
-
+  
   public function __construct($params) {
     $this->file_name = $params["file_name"];
   }
