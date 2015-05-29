@@ -44,7 +44,7 @@ class dao_gen {
     fwrite($this->writer, "/**" . $this->_LF . "*" . $this->_LF);
     fwrite($this->writer, "* @package    Basic MVC framework" . $this->_LF);
     fwrite($this->writer, "* @author     Jeremie Litzler" . $this->_LF);
-    fwrite($this->writer, "* @copyright  Copyright (c) 2014" . $this->_LF);
+    fwrite($this->writer, "* @copyright  Copyright (c) " . date("Y") . $this->_LF);
     fwrite($this->writer, "* @license" . $this->_LF);
     fwrite($this->writer, "* @link" . $this->_LF);
     fwrite($this->writer, "* @since" . $this->_LF);
@@ -78,32 +78,36 @@ class dao_gen {
   public function AddPropertiesAndConsts($columns) {
     //Write the public properties
     fwrite($this->writer, $this->_TAB2 . "public " . $this->_LF);
-    foreach ($columns as $column_num => $column_name) {
-      if (count($columns) - 1 === $column_num) {
-        fwrite($this->writer, $this->_TAB4 . "$" . $column_name . ";" . $this->_CRLF);
+    $columnCount = 0;
+    foreach ($columns as $columnName => $columnMeta) {
+      if (count($columns) - 1 === $columnCount) {
+        fwrite($this->writer, $this->_TAB4 . "$" . $columnMeta[0]["Field"] . ";" . $this->_CRLF);
       } else {
-        fwrite($this->writer, $this->_TAB4 . "$" . $column_name . "," . $this->_LF);
+        fwrite($this->writer, $this->_TAB4 . "$" . $columnMeta[0]["Field"] . "," . $this->_LF);
       }
+      $columnCount += 1;
     }
     //Write the constants
     fwrite($this->writer, $this->_TAB2 . "const " . $this->_LF);
-    foreach ($columns as $column_num => $column_name) {
-      if (count($columns) - 1 === $column_num) {
-        fwrite($this->writer, $this->_TAB4 . strtoupper($column_name) . "_ERR = " . $column_num . ";" . $this->_CRLF);
+    $columnCount = 0;
+    foreach ($columns as $columnName => $columnMeta) {
+      if (count($columns) - 1 === $columnCount) {
+        fwrite($this->writer, $this->_TAB4 . strtoupper($columnMeta[0]["Field"]) . "_ERR = " . $columnCount . ";" . $this->_CRLF);
       } else {
-        fwrite($this->writer, $this->_TAB4 . strtoupper($column_name) . "_ERR = " . $column_num . "," . $this->_LF);
+        fwrite($this->writer, $this->_TAB4 . strtoupper($columnMeta[0]["Field"]) . "_ERR = " . $columnCount . "," . $this->_LF);
       }
+      $columnCount += 1;
     }
   }
 
   public function AddSetters($columns) {
     fwrite($this->writer, $this->_TAB2 . "// SETTERS //" . $this->_LF);
-    foreach ($columns as $column_num => $column_name) {
-      $output = $this->_TAB2 . "public function set" . ucfirst($column_name) . "($" . $column_name . ") {" . $this->_LF;
+    foreach ($columns as $columnName => $columnMeta) {
+      $output = $this->_TAB2 . "public function set" . ucfirst($columnMeta[0]["Field"]) . "($" . $columnMeta[0]["Field"] . ") {" . $this->_LF;
       //$output .= $this->_TAB4 . "if (empty($" . $column_name . ")) {" . $this->_LF;
       //$output .= $this->_TAB6 . '$this->erreurs[] = self::' . strtoupper($column_name) . '_ERR;' . $this->_LF;
       //$output .= $this->_TAB4 . "} else {" . $this->_LF;
-      $output .= $this->_TAB6 . '$this->' . $column_name . ' = $' . $column_name . ';' . $this->_LF;
+      $output .= $this->_TAB6 . '$this->' . $columnMeta[0]["Field"] . ' = $' . $columnMeta[0]["Field"] . ';' . $this->_LF;
       //$output .= $this->_TAB4 . "}" . $this->_LF;
       $output .= $this->_TAB2 . "}" . $this->_CRLF;
       fwrite($this->writer, $output);
@@ -112,9 +116,9 @@ class dao_gen {
 
   public function AddGetters($columns) {
     fwrite($this->writer, $this->_TAB2 . "// GETTERS //" . $this->_LF);
-    foreach ($columns as $column_num => $column_name) {
-      $output = $this->_TAB2 . "public function " . $column_name . "() {" . $this->_LF;
-      $output .= $this->_TAB4 . 'return $this->' . $column_name . ';' . $this->_LF;
+    foreach ($columns as $columnName => $columnMeta) {
+      $output = $this->_TAB2 . "public function " . $columnMeta[0]["Field"] . "() {" . $this->_LF;
+      $output .= $this->_TAB4 . 'return $this->' . $columnMeta[0]["Field"] . ';' . $this->_LF;
       $output .= $this->_TAB2 . "}" . $this->_CRLF;
       fwrite($this->writer, $output);
     }

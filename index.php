@@ -14,16 +14,29 @@ if ($stmt->rowCount() > 0) {
   foreach ($tables as $table) {
     $table_name = $table[0];
     $table_col_names = get_table_column_names($table[0], $DBH);
-
+    $table_col_metas = GetTableColumnsMeta($DBH, $table[0], $table_col_names);
     $file_name =  "output/" . ucfirst($table_name) . ".php<br />";
     echo $file_name;
     $dao = new generators\dao_gen(array("file_name" => $file_name));
     BuildClassHeader($dao, $table_name);
-    BuildClassBody($dao, $table_col_names);
+    BuildClassBody($dao, $table_col_metas);
     $dao->ClassEnd();
   }
 }
 
+function GetTableColumnsMeta($dbConnect, $tableName, $columnNames) {
+  $table_columns_meta = array();
+  foreach ($columnNames as $columnName) {
+    $sql = "SHOW COLUMNS FROM `$tableName` WHERE Field = '$columnName'";
+    try {
+    $query = $dbConnect->query($sql); 
+    } catch (PDOException $exc) {
+      echo $exc->getTraceAsString();
+    }
+    $table_columns_meta[$columnName] = $query->fetchAll();
+  }
+  return $table_columns_meta;
+}
 function get_table_column_names($table, $dbh) {
   $q = $dbh->prepare('DESCRIBE ' . $table . ';');
   $q->execute();
@@ -40,11 +53,11 @@ function BuildClassHeader($dao, $table_name) {
   $dao->ClassStart(array("class_name" => $table_name, "base_class" => "\Library\Entity"));
 }
 
-function BuildClassBody(\generators\dao_gen $dao, $table_col_names) {
+function BuildClassBody(\generators\dao_gen $dao, $table_col_metas) {
   //Build the properties
-  $dao->AddPropertiesAndConsts($table_col_names);
+  $dao->AddPropertiesAndConsts($table_col_metas);
   //Add setters
-  $dao->AddSetters($table_col_names);
+  $dao->AddSetters($table_col_metas);
   //Add getters
-  $dao->AddGetters($table_col_names);
+  $dao->AddGetters($table_col_metas);
 }
